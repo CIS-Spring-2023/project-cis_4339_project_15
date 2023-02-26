@@ -6,7 +6,7 @@ export default {
   name: 'App',
   data() {
     return {
-      orgName: 'Dataplatform'
+      orgName: 'Dataplatforms'
     }
   },
   created() {
