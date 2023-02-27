@@ -7,6 +7,8 @@ export default {
       // Variables from the login form
       username: '',
       password: '',
+      fail: false,
+      success: false
     }
   },
 
@@ -16,10 +18,10 @@ export default {
   methods: {
     login() {
       if (this.username === 'user' && this.password === 'password') {
-        alert('Login successful!');
+        this.success = true;
         this.$root.updateAuth(true);
       } else {
-        alert('Invalid username or password.');
+        this.fail = true;
       }
     
     },
@@ -28,20 +30,20 @@ export default {
 </script>
 
 <template>
-  <main>
-    <div>
-    <form class="font-bold text-4xl text-red-700 tracking-widest text-center mt-10"
-        @submit.prevent="login">
-      <label>
-        Username
-        <input type="text" v-model="username" />
-      </label>
-      <label>
-        Password
-        <input type="password" v-model="password" />
-      </label>
-      <button type="submit">Log in</button>
-    </form>
+  <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+    <div class="py-8 px-4 shadow sm:rounded-lg sm:px-10">
+      <form @submit.prevent="login">
+        <label class="block text-sm font-medium text-gray-700">Username
+          <input type="text" v-model="username" />
+        </label><br>
+        <label class="block text-sm font-medium text-gray-700 ml-1">Password
+          <input type="password" v-model="password" />
+        </label><br>
+          <button class="w-full flex justify-center bg-red-700 text-white rounded" type="submit">Login</button>
+      </form>
+      <br>
+      <div v-if="fail" class="text-red-700 w-full flex justify-center">Incorrect Username or Password</div>
+      <div v-if="success" class="text-green-700 w-full flex justify-center">Success</div>
     </div>
-  </main>
+  </div>
 </template>
