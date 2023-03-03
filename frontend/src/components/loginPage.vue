@@ -13,18 +13,24 @@ export default {
   },
 
   // This is the front-end only method functionality, later we will make an api call instead
-  // This is not a secure method, it sets auth (the global variable) to true
-  // USERNAME: user PASSWORD: password
+  // This is not a secure method, it uses the method in app.vue to change the states
+  // USERNAME: 'viewer' / 'editor' PASSWORD: 'password'
   methods: {
     login() {
-      if (this.username === 'user' && this.password === 'password') {
+      if (this.username === 'viewer' && this.password === 'password') {
+        // Updates variables for the alert in the html
         this.success = true;
-        this.$root.updateAuth(true);
+        // Updates the state using the mentioned method
+        this.$root.updateView(true);
+      } 
+      else if (this.username === 'editor' && this.password === 'password') {
+        this.success = true;
+        this.$root.updateEdit(true);
       } else {
         this.fail = true;
       }
-    
     },
+
   }
 }
 </script>

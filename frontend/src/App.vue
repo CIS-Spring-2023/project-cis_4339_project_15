@@ -7,9 +7,10 @@ export default {
   data() {
     return {
       orgName: 'Dataplatform',
-      // Define auth for global var, set as session storage so 'login status' persists across reload page
+      // Define the states for user status, set as session storage so 'login status' persists across reload page
       // The 'login status' persists but expires after exiting the page so you have to login again
-      auth: sessionStorage.getItem('auth') || false
+      view: sessionStorage.getItem('view') || false,
+      edit: sessionStorage.getItem('edit') || false
     }
   },
   created() {
@@ -18,11 +19,15 @@ export default {
     })
   },
 
-  // This is the method to update auth used in the login vue
+  // This is the method to update the state which is used in other vues
   methods: {
-    updateAuth(newValue) {
-      this.auth = newValue;
-      sessionStorage.setItem('auth', newValue)
+    updateView(newValue) {
+      this.view = newValue;
+      sessionStorage.setItem('view', newValue)
+    },
+    updateEdit(newValue){
+      this.edit = newValue;
+      sessionStorage.setItem('edit', newValue)
     }
   }
 }
@@ -46,7 +51,7 @@ export default {
                 Dashboard
               </router-link>
             </li>
-            <li v-if="auth">
+            <li v-if="edit">
               <router-link to="/intakeform">
                 <span
                   style="position: relative; top: 6px"
@@ -56,7 +61,7 @@ export default {
                 Client Intake Form
               </router-link>
             </li>
-            <li v-if="auth">
+            <li v-if="edit">
               <router-link to="/eventform">
                 <span
                   style="position: relative; top: 6px"
@@ -66,7 +71,8 @@ export default {
                 Create Event
               </router-link>
             </li>
-            <li>
+            <li v-if="edit || view"
+            >
               <router-link to="/findclient">
                 <span
                   style="position: relative; top: 6px"
@@ -76,7 +82,7 @@ export default {
                 Find Client
               </router-link>
             </li>
-            <li>
+            <li v-if="edit || view">
               <router-link to="/findevents">
                 <span
                   style="position: relative; top: 6px"
