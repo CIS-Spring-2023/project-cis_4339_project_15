@@ -1,7 +1,9 @@
 # LOGIN INFORMATION
 
-Viewer: Username = 'viewer' Password = 'password'
-Editor: Username = 'editor' Password = 'password'
+Viewer: 
+        Username = 'viewer' Password = 'password'
+Editor: 
+        Username = 'editor' Password = 'password'
 
 ## Data Platform Frontend
 
