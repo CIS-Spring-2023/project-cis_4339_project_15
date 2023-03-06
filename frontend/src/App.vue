@@ -6,13 +6,29 @@ export default {
   name: 'App',
   data() {
     return {
-      orgName: 'Dataplatform'
+      orgName: 'Dataplatform',
+      // Define the states for user status, set as session storage so 'login status' persists across reload page
+      // The 'login status' persists but expires after exiting the page so you have to login again
+      view: sessionStorage.getItem('view') || false,
+      edit: sessionStorage.getItem('edit') || false
     }
   },
   created() {
     axios.get(`${apiURL}/org`).then((res) => {
       this.orgName = res.data.name
     })
+  },
+
+  // This is the method to update the state which is used in other vues
+  methods: {
+    updateView(newValue) {
+      this.view = newValue;
+      sessionStorage.setItem('view', newValue)
+    },
+    updateEdit(newValue){
+      this.edit = newValue;
+      sessionStorage.setItem('edit', newValue)
+    }
   }
 }
 </script>
@@ -35,7 +51,7 @@ export default {
                 Dashboard
               </router-link>
             </li>
-            <li>
+            <li v-if="edit">
               <router-link to="/intakeform">
                 <span
                   style="position: relative; top: 6px"
@@ -45,7 +61,7 @@ export default {
                 Client Intake Form
               </router-link>
             </li>
-            <li>
+            <li v-if="edit">
               <router-link to="/eventform">
                 <span
                   style="position: relative; top: 6px"
@@ -55,7 +71,8 @@ export default {
                 Create Event
               </router-link>
             </li>
-            <li>
+            <li v-if="edit || view"
+            >
               <router-link to="/findclient">
                 <span
                   style="position: relative; top: 6px"
@@ -65,7 +82,7 @@ export default {
                 Find Client
               </router-link>
             </li>
-            <li>
+            <li v-if="edit || view">
               <router-link to="/findevents">
                 <span
                   style="position: relative; top: 6px"
@@ -73,6 +90,16 @@ export default {
                   >search</span
                 >
                 Find Event
+              </router-link>
+            </li>
+            <li>
+              <router-link to="/loginpage">
+                <span
+                  style="position: relative; top: 6px"
+                  class="material-icons"
+                  >key</span
+                >
+                User Login
               </router-link>
             </li>
           </ul>
