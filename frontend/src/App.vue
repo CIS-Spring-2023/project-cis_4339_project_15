@@ -71,6 +71,16 @@ export default {
                 Create Event
               </router-link>
             </li>
+            <li v-if="edit || view">
+              <router-link to="/servicepage">
+                <span
+                  style="position: relative; top: 6px"
+                  class="material-icons"
+                  >event</span
+                >
+                Services
+              </router-link>
+            </li>
             <li v-if="edit || view"
             >
               <router-link to="/findclient">

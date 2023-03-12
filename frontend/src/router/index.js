@@ -50,6 +50,13 @@ const routes = [
     name: 'loginpage',
     props: true,
     component: () => import('../components/loginPage.vue')
+  },
+  {
+    path: '/servicepage',
+    name: 'servicepage',
+    props: true,
+    component: () => import('../components/servicePage.vue'),
+    meta: {needView: true}
   }
 ]
 const router = createRouter({
