@@ -1,0 +1,10 @@
+{
+    "workbench.colorTheme": "Celestial",
+    "eslint.workingDirectories": ["/path/YourProjectFolder/SrcFolder"],
+    "eslint.options": {
+    "overrideConfigFile": "/path/YourProjectFolder/SrcFolder/.eslintrc.js"
+    },
+    "eslint.validate": ["javascript", "vue"],
+    "prettier.configPath": "/Users/admin/Documents/WWW/myland.loc/SSRVite/.prettierrc",
+    "editor.formatOnSave": true
+    }
