@@ -110,7 +110,7 @@ export default {
         <!-- form field -->
         <div class="flex flex-col">
           <label class="block">
-            <span class="text-gray-700">Field</span>
+            <span class="text-gray-700">name or description</span>
             <span style="color: #ff0000">*</span>
             <input type="text"
               class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
@@ -141,7 +141,7 @@ export default {
     <form @submit.prevent="submitActiveService">
       <!-- grid container -->
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
-        <h2 class="text-2xl font-bold">Delete Service</h2>
+        <h2 class="text-2xl font-bold">Toggle Service</h2>
         <!-- form field -->
         <div class="flex flex-col">
           <label class="block">
@@ -156,7 +156,7 @@ export default {
         <!-- submit button -->
         <div class="flex">
           <button class="bg-red-700 text-white rounded" type="submit">
-            Delete Service
+            Toggle Service
           </button>
         </div>
       </div>
