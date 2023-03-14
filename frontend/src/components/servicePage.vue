@@ -6,14 +6,18 @@ const apiURL = import.meta.env.VITE_ROOT_API
 export default {
   data() {
     return {
-      status: sessionStorage.getItem('edit')
+      ea: sessionStorage.getItem('edit'),
+      services: [],
     }
   },
 
   // Services are currently hard-coded, later we will use api calls
   methods: {
     addService() {
+      const newElement = { name: this.name, email: this.email};
+      this.services.push(newElement);
 
+      
 
     }
   }
@@ -21,7 +25,6 @@ export default {
 </script>
 
 <template>
-  <h1 v-if="status">ONLY EDITOR SHOULD SEE THIS</h1>
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
       <div class="py-8 px-4 shadow sm:rounded-lg sm:px-10">
         <h1>Services</h1>

@@ -56,6 +56,13 @@ const routes = [
     name: 'servicepage',
     props: true,
     component: () => import('../components/servicePage.vue'),
+    meta: {needEdit: true}
+  },
+  {
+    path: '/findservices',
+    name: 'findservices',
+    props: true,
+    component: () => import('../components/findServices.vue'),
     meta: {needView: true}
   }
 ]

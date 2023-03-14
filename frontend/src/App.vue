@@ -78,7 +78,7 @@ export default {
                   class="material-icons"
                   >event</span
                 >
-                Services
+                Edit Services
               </router-link>
             </li>
             <li v-if="edit || view"
@@ -100,6 +100,16 @@ export default {
                   >search</span
                 >
                 Find Event
+              </router-link>
+            </li>
+            <li v-if="edit || view">
+              <router-link to="/findservices">
+                <span
+                  style="position: relative; top: 6px"
+                  class="material-icons"
+                  >search</span
+                >
+                Find Services
               </router-link>
             </li>
             <li>
