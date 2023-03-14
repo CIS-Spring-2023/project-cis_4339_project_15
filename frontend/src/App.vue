@@ -10,7 +10,10 @@ export default {
       // Define the states for user status, set as session storage so 'login status' persists across reload page
       // The 'login status' persists but expires after exiting the page so you have to login again
       view: sessionStorage.getItem('view') || false,
-      edit: sessionStorage.getItem('edit') || false
+      edit: sessionStorage.getItem('edit') || false,
+
+      // TEMP service list for hard-coded front-end
+      services: []
     }
   },
   created() {
@@ -19,8 +22,9 @@ export default {
     })
   },
 
-  // This is the method to update the state which is used in other vues
+  
   methods: {
+    // This is the method to update the login state which is used in other vues
     updateView(newValue) {
       this.view = newValue;
       sessionStorage.setItem('view', newValue)
@@ -28,9 +32,58 @@ export default {
     updateEdit(newValue){
       this.edit = newValue;
       sessionStorage.setItem('edit', newValue)
-    }
+    },
+
+    // These are demonstration methods for hard-coded services, will be replaced later by api calls
+    addServices: function(number, name, description) {
+      const newService = { number, name, description };
+
+      // To place the array into the services obj
+      this.services.push(newService);
+
+      // Set local storage so the services obj persists across reloads and page exit
+      localStorage.setItem('services', JSON.stringify(this.services));
+    },
+    updateServices: function(num, field, newVal){
+
+      // Necessary temp so that we can add to local storage without removing things accidentally
+      const tempList = JSON.parse(localStorage.getItem('services'));
+
+      // Iterate through indexes and find which one corresponds to number/id user has selected
+      for (const i in tempList) {
+        if (parseInt(tempList[i].number) === parseInt(num)) {   
+          
+          // Change either name or description depending on field selected
+          if (field === 'name'){
+            tempList[i].name = newVal
+            break;
+          }
+          else if(field === 'description'){
+            tempList[i].description = newVal
+            break;
+          }
+          else { break; }
+        }
+      }
+      localStorage.setItem('services', JSON.stringify(tempList))  
+
+    },
+    deleteServices(num){
+
+      // Similar methods as others
+      const tempList = JSON.parse(localStorage.getItem('services'));
+      for (const i in tempList) {
+        if (parseInt(tempList[i].number) === parseInt(num)) {      
+          
+          tempList.splice(i, 1)
+          break;
+        }
+      }
+      localStorage.setItem('services', JSON.stringify(tempList))
+    },
   }
 }
+
 </script>
 <template>
   <main class="flex flex-row">
@@ -71,6 +124,16 @@ export default {
                 Create Event
               </router-link>
             </li>
+            <li v-if="edit || view">
+              <router-link to="/servicepage">
+                <span
+                  style="position: relative; top: 6px"
+                  class="material-icons"
+                  >event</span
+                >
+                Edit Services
+              </router-link>
+            </li>
             <li v-if="edit || view"
             >
               <router-link to="/findclient">
@@ -90,6 +153,16 @@ export default {
                   >search</span
                 >
                 Find Event
+              </router-link>
+            </li>
+            <li v-if="edit || view">
+              <router-link to="/findservices">
+                <span
+                  style="position: relative; top: 6px"
+                  class="material-icons"
+                  >search</span
+                >
+                Find Services
               </router-link>
             </li>
             <li>
