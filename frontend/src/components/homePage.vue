@@ -2,11 +2,15 @@
 import { DateTime } from 'luxon'
 import axios from 'axios'
 import AttendanceChart from './barChart.vue'
+// Importing new chart component
+import Zipchart from './pieChart.vue'
 const apiURL = import.meta.env.VITE_ROOT_API
 
+// Added imports here too
 export default {
   components: {
-    AttendanceChart
+    AttendanceChart,
+    Zipchart
   },
   data() {
     return {
@@ -79,6 +83,11 @@ export default {
         Welcome
       </h1>
       <br />
+      <!-- Created Div for styling for chart, needs to be sized properly and centered, called chart here too ! -->
+      <div class="box" style="position: relative; height:50%; width:40% ">
+        <h1 class="font-bold text-center text-red-700">Clients by Zipcode</h1>
+      <Zipchart></Zipchart>
+    </div>
       <div
         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10"
       >

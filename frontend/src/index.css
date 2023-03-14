@@ -5,3 +5,18 @@
 button {
   padding: 10px;
 }
+
+/* // added styling for chart and box around chart */
+.box {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+  
+}
+
+.chart {
+  height: 50px;
+  width: 50px;
+  border: 50px;
+}
