@@ -1,11 +1,12 @@
 <script>
-// TEMPLATE AND SCRIPT RECIEVED FROM OTHER FIND PAGES FOR CONSISTENCY PURPOSES
+// TEMPLATE CSS, AND SCRIPT RECIEVED FROM OTHER FIND PAGES FOR CONSISTENCY PURPOSES
 import axios from 'axios'
 const apiURL = import.meta.env.VITE_ROOT_API
 
 export default {
   data() {
     return {
+      // Take the services from the local storage to display
       services: JSON.parse(localStorage.getItem('services')),
       // Parameter for search to occur
       searchBy: '',
@@ -14,6 +15,7 @@ export default {
     }
   },
   methods: {
+    // TEMP, fill with api call in backend
     handleSubmitForm() {
       
     },

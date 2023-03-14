@@ -1,8 +1,7 @@
 <script>
 const apiURL = import.meta.env.VITE_ROOT_API
 
-// This is the form which allows to VIEW services
-// Visible to viewers and editors
+// TEMPLATE AND CSS FROM OTHER FORM PAGES FOR CONSISTENCY
 export default {
   data() {
     return {
@@ -17,6 +16,7 @@ export default {
   },
 
   // Services are currently hard-coded, later we will use api calls
+  // These are the form submit methods and they will run the methods in App.vue
   methods: {
     submitAddService() {
       this.$root.addServices(this.numberAdd, this.name, this.description);
@@ -25,7 +25,7 @@ export default {
       this.description = '';
     },
     submitEditService() {
-      this.$root.updateServices(this.numberEdit, this.field, this.description);
+      this.$root.updateServices(this.numberEdit, this.field, this.newVal);
       this.numberEdit = '';
       this.field = '';
       this.newVal = '';
