@@ -124,7 +124,7 @@ export default {
                 Create Event
               </router-link>
             </li>
-            <li v-if="edit || view">
+            <li v-if="edit">
               <router-link to="/servicepage">
                 <span
                   style="position: relative; top: 6px"
