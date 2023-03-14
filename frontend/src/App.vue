@@ -10,7 +10,8 @@ export default {
       // Define the states for user status, set as session storage so 'login status' persists across reload page
       // The 'login status' persists but expires after exiting the page so you have to login again
       view: sessionStorage.getItem('view') || false,
-      edit: sessionStorage.getItem('edit') || false
+      edit: sessionStorage.getItem('edit') || false,
+      services: []
     }
   },
   created() {
@@ -28,9 +29,30 @@ export default {
     updateEdit(newValue){
       this.edit = newValue;
       sessionStorage.setItem('edit', newValue)
-    }
+    },
+    addServices: function(number, name, description) {
+      const newService = { number, name, description };
+      this.services.push(newService);
+      localStorage.setItem('services', JSON.stringify(this.services));
+      console.log(this.services)
+    },
+    updateServices(){
+      
+    },
+    deleteServices(num){
+      const tempList = JSON.parse(localStorage.getItem('services'));
+      for (const i in tempList) {
+        if (parseInt(tempList[i].number) === parseInt(num)) {      
+          
+          tempList.splice(i, 1)
+          break;
+        }
+      }
+      localStorage.setItem('services', JSON.stringify(tempList))
+    },
   }
 }
+
 </script>
 <template>
   <main class="flex flex-row">

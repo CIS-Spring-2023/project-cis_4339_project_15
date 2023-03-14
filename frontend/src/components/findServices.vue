@@ -6,11 +6,11 @@ const apiURL = import.meta.env.VITE_ROOT_API
 export default {
   data() {
     return {
-      events: [],
+      services: JSON.parse(localStorage.getItem('services')),
       // Parameter for search to occur
       searchBy: '',
       number: '',
-      name: ''
+      name: '',
     }
   },
   methods: {
@@ -62,7 +62,7 @@ export default {
             <input
               type="number"
               class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              v-model="serviceNum"
+              v-model="number"
               v-on:keyup.enter="handleSubmitForm"
               placeholder="Enter Service Number"
             />
@@ -73,7 +73,7 @@ export default {
           <input
             class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             type="text"
-            v-model="serviceName"
+            v-model="name"
             v-on:keyup.enter="handleSubmitForm"
             placeholder="Enter Service Name"
           />
@@ -123,13 +123,12 @@ export default {
           </thead>
           <tbody class="divide-y divide-gray-300">
             <tr
-              @click="editEvent(event._id)"
-              v-for="event in events"
-              :key="event._id"
+              v-for="(item, index) in services"
+              :key="index"
             >
-              <td class="p-2 text-left">{{ event.name }}</td>
-              <td class="p-2 text-left">{{ formattedDate(event.date) }}</td>
-              <td class="p-2 text-left">{{ event.address.line1 }}</td>
+              <td class="p-2 text-left">{{ item.number }}</td>
+              <td class="p-2 text-left">{{ item.name }}</td>
+              <td class="p-2 text-left">{{ item.description }}</td>
             </tr>
           </tbody>
         </table>
