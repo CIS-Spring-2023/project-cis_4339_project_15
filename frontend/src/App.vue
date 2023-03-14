@@ -22,21 +22,23 @@ export default {
     })
   },
 
-  
+
   methods: {
     // This is the method to update the login state which is used in other vues
     updateView(newValue) {
       this.view = newValue;
       sessionStorage.setItem('view', newValue)
     },
-    updateEdit(newValue){
+    updateEdit(newValue) {
       this.edit = newValue;
       sessionStorage.setItem('edit', newValue)
     },
 
     // These are demonstration methods for hard-coded services, will be replaced later by api calls
-    addServices: function(number, name, description) {
-      const newService = { number, name, description };
+    addServices: function (number, name, description) {
+      // Active by default and is displayed
+      const active = true
+      const newService = { number, name, description, active };
 
       // To place the array into the services obj
       this.services.push(newService);
@@ -44,38 +46,40 @@ export default {
       // Set local storage so the services obj persists across reloads and page exit
       localStorage.setItem('services', JSON.stringify(this.services));
     },
-    updateServices: function(num, field, newVal){
+    updateServices: function (num, field, newVal) {
 
       // Necessary temp so that we can add to local storage without removing things accidentally
       const tempList = JSON.parse(localStorage.getItem('services'));
 
       // Iterate through indexes and find which one corresponds to number/id user has selected
       for (const i in tempList) {
-        if (parseInt(tempList[i].number) === parseInt(num)) {   
-          
+        if (parseInt(tempList[i].number) === parseInt(num)) {
+
           // Change either name or description depending on field selected
-          if (field === 'name'){
+          if (field === 'name') {
             tempList[i].name = newVal
             break;
           }
-          else if(field === 'description'){
+          else if (field === 'description') {
             tempList[i].description = newVal
             break;
           }
           else { break; }
         }
       }
-      localStorage.setItem('services', JSON.stringify(tempList))  
+      localStorage.setItem('services', JSON.stringify(tempList))
 
     },
-    deleteServices(num){
+    activeServices(num) {
 
       // Similar methods as others
       const tempList = JSON.parse(localStorage.getItem('services'));
       for (const i in tempList) {
-        if (parseInt(tempList[i].number) === parseInt(num)) {      
-          
-          tempList.splice(i, 1)
+        if (parseInt(tempList[i].number) === parseInt(num)) {
+
+          // Toggle true or false for state active
+          // There is a v-if in find service page that only displays active ones
+          tempList[i].active = !tempList[i].active
           break;
         }
       }
@@ -96,82 +100,49 @@ export default {
           <ul class="flex flex-col gap-4">
             <li>
               <router-link to="/">
-                <span
-                  style="position: relative; top: 6px"
-                  class="material-icons"
-                  >dashboard</span
-                >
+                <span style="position: relative; top: 6px" class="material-icons">dashboard</span>
                 Dashboard
               </router-link>
             </li>
             <li v-if="edit">
               <router-link to="/intakeform">
-                <span
-                  style="position: relative; top: 6px"
-                  class="material-icons"
-                  >people</span
-                >
+                <span style="position: relative; top: 6px" class="material-icons">people</span>
                 Client Intake Form
               </router-link>
             </li>
             <li v-if="edit">
               <router-link to="/eventform">
-                <span
-                  style="position: relative; top: 6px"
-                  class="material-icons"
-                  >event</span
-                >
+                <span style="position: relative; top: 6px" class="material-icons">event</span>
                 Create Event
               </router-link>
             </li>
             <li v-if="edit">
               <router-link to="/servicepage">
-                <span
-                  style="position: relative; top: 6px"
-                  class="material-icons"
-                  >event</span
-                >
+                <span style="position: relative; top: 6px" class="material-icons">event</span>
                 Edit Services
               </router-link>
             </li>
-            <li v-if="edit || view"
-            >
+            <li v-if="edit || view">
               <router-link to="/findclient">
-                <span
-                  style="position: relative; top: 6px"
-                  class="material-icons"
-                  >search</span
-                >
+                <span style="position: relative; top: 6px" class="material-icons">search</span>
                 Find Client
               </router-link>
             </li>
             <li v-if="edit || view">
               <router-link to="/findevents">
-                <span
-                  style="position: relative; top: 6px"
-                  class="material-icons"
-                  >search</span
-                >
+                <span style="position: relative; top: 6px" class="material-icons">search</span>
                 Find Event
               </router-link>
             </li>
             <li v-if="edit || view">
               <router-link to="/findservices">
-                <span
-                  style="position: relative; top: 6px"
-                  class="material-icons"
-                  >search</span
-                >
+                <span style="position: relative; top: 6px" class="material-icons">search</span>
                 Find Services
               </router-link>
             </li>
             <li>
               <router-link to="/loginpage">
-                <span
-                  style="position: relative; top: 6px"
-                  class="material-icons"
-                  >key</span
-                >
+                <span style="position: relative; top: 6px" class="material-icons">key</span>
                 User Login
               </router-link>
             </li>
@@ -180,10 +151,8 @@ export default {
       </header>
     </div>
     <div class="grow w-4/5">
-      <section
-        class="justify-end items-center h-24 flex"
-        style="background: linear-gradient(250deg, #c8102e 70%, #efecec 50.6%)"
-      >
+      <section class="justify-end items-center h-24 flex"
+        style="background: linear-gradient(250deg, #c8102e 70%, #efecec 50.6%)">
         <h1 class="mr-20 text-3xl text-white">{{ this.orgName }}</h1>
       </section>
       <div>
