@@ -129,10 +129,55 @@ const eventDataSchema = new Schema(
   }
 )
 
+// collection for user (the login information)
+// using mongoose-bcrypt package
+const userDataSchema = new Schema(
+  {
+    org: {
+      type: String,
+      required: true
+    },
+    username: {
+      type: String,
+      required: true
+    },
+    password: {
+      type: String,
+      bcrypt: true,
+      required: true
+    }
+  },
+  {
+    collection: 'user'
+  }
+)
+
+// Add the plugin to the schema
+userDataSchema.plugin(require('mongoose-bcrypt'))
+
 // create models from mongoose schemas
 const clients = mongoose.model('client', clientDataSchema)
 const orgs = mongoose.model('org', orgDataSchema)
 const events = mongoose.model('event', eventDataSchema)
+const user = mongoose.model('user', userDataSchema)
+
+/* Code used when intially creating roles to encrypt password, commented out to prevent from creating new users.
+
+const newUser = new user({
+  org: '64433144f0db934dec227b4c',
+  username: 'editor',
+  password: 'password123'
+});
+
+newUser.save((err) => {
+  if (err) {
+    console.error(err);
+  } else {
+    console.log('User saved successfully');
+  }
+}); 
+
+*/
 
 // package the models in an object to export
-module.exports = { clients, orgs, events }
+module.exports = { clients, orgs, events, user }
