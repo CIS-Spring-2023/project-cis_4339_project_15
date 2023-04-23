@@ -24,6 +24,7 @@ export default {
         const chartData = response.data // Assuming the response is an array of chart data objects
         this.label = chartData.map(event => event.label) // Update label prop with fetched data
         this.chartData = chartData.map(event => event.value) // Update chartData prop with fetched data
+        console.log(response.data); // Add this line to log the response data to the console
       } catch (error) {
         console.error('Failed to fetch chart data:', error)
         // Handle error as needed
