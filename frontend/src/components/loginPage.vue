@@ -22,9 +22,11 @@ export default {
         this.success = true;
         // Updates the state using the mentioned method
         this.$root.updateView(true);
-      } 
+        this.$root.updateEdit(false);
+      }
       else if (this.username === 'editor' && this.password === 'password') {
         this.success = true;
+        this.$root.updateView(true);
         this.$root.updateEdit(true);
       } else {
         this.fail = true;
@@ -45,7 +47,7 @@ export default {
         <label class="block text-sm font-medium text-gray-700 ml-1">Password
           <input type="password" v-model="password" />
         </label><br>
-          <button class="w-full flex justify-center bg-red-700 text-white rounded" type="submit">Login</button>
+        <button class="w-full flex justify-center bg-red-700 text-white rounded" type="submit">Login</button>
       </form>
       <br>
       <div v-if="fail" class="text-red-700 w-full flex justify-center">Incorrect Username or Password</div>
