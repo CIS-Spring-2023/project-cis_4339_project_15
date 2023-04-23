@@ -20,7 +20,7 @@ export default {
     async fetchChartData() {
       try {
         // Make an HTTP GET request to fetch chart data from backend API
-        const response = await axios.get('http://127.0.0.1:27017/api/chartData') // Update URL to match your backend route
+        const response = await axios.get('http://127.0.0.1:3000/api/chartData') // Update URL to match your backend route
         const chartData = response.data // Assuming the response is an array of chart data objects
         this.label = chartData.map(event => event.label) // Update label prop with fetched data
         this.chartData = chartData.map(event => event.value) // Update chartData prop with fetched data
