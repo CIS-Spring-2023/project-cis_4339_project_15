@@ -1,30 +1,34 @@
+<template>
+  <div class="shadow-lg rounded-lg overflow-hidden">
+    <canvas class="p-10" ref="attendanceChart"></canvas>
+  </div>
+</template>
+
 <script>
 import { Chart, registerables } from 'chart.js'
-import axios from 'axios' // import Axios library for making HTTP requests
+import axios from 'axios'
+
 Chart.register(...registerables)
 
 export default {
-  props: {
-    label: {
-      type: Array
-    },
-    chartData: {
-      type: Array
+  data() {
+    return {
+      label: [],
+      chartData: []
     }
   },
   async mounted() {
-    await this.fetchChartData() // Call the fetchChartData method on component mount
-    this.renderChart() // Call the renderChart method to render the chart
+    await this.fetchChartData()
+    this.renderChart()
   },
   methods: {
     async fetchChartData() {
       try {
-        // Make an HTTP GET request to fetch chart data from backend API
-        const response = await axios.get('http://127.0.0.1:3000/api/chartData') // Update URL to match your backend route
-        const chartData = response.data // Assuming the response is an array of chart data objects
-        this.label = chartData.map(event => event.label) // Update label prop with fetched data
-        this.chartData = chartData.map(event => event.value) // Update chartData prop with fetched data
-        console.log(response.data); // Add this line to log the response data to the console
+        const response = await axios.get('http://127.0.0.1:3000/api/chartData')
+        const chartData = response.data
+        this.label = chartData.map(event => event.label)
+        this.chartData = chartData.map(event => event.value)
+        console.log(response.data);
       } catch (error) {
         console.error('Failed to fetch chart data:', error)
         // Handle error as needed
@@ -78,9 +82,3 @@ export default {
   }
 }
 </script>
-
-<template>
-  <div class="shadow-lg rounded-lg overflow-hidden">
-    <canvas class="p-10" ref="attendanceChart"></canvas>
-  </div>
-</template>
