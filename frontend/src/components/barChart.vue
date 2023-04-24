@@ -18,13 +18,13 @@ export default {
     }
   },
   async mounted() {
-    await this.fetchChartData()
-    this.renderChart()
+    await this.fetchbarChartData()
+    this.renderbarChart()
   },
   methods: {
-    async fetchChartData() {
+    async fetchbarChartData() {
       try {
-        const response = await axios.get('http://127.0.0.1:3000/api/chartData')
+        const response = await axios.get('http://127.0.0.1:3000/api/barchartData')
         const chartData = response.data
         this.label = chartData.map(event => event.label)
         this.chartData = chartData.map(event => event.value)
@@ -34,7 +34,7 @@ export default {
         // Handle error as needed
       }
     },
-    renderChart() {
+    renderbarChart() {
       const backgroundColor = this.chartData.map(() => this.getColor())
       const borderColor = backgroundColor.map((e) =>
         e.replace(/[\d\.]+\)$/g, '1)')
