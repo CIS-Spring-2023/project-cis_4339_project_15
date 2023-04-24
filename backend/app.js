@@ -53,7 +53,7 @@ const eventSchema = new mongoose.Schema({
 const Event = mongoose.model('Event', eventSchema);
 
 // Fetch data from MongoDB
-app.get('/api/chartData', async (req, res) => {
+app.get('/api/barchartData', async (req, res) => {
   try {
     // Fetch data from MongoDB using the Event model
     const events = await Event.find();
