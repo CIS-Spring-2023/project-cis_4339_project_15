@@ -34,7 +34,7 @@ export default {
         // Handle error as needed
       }
     },
-    renderChart() {
+    renderbarChart() {
       const backgroundColor = this.chartData.map(() => this.getColor())
       const borderColor = backgroundColor.map((e) =>
         e.replace(/[\d\.]+\)$/g, '1)')
