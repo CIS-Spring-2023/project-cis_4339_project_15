@@ -87,7 +87,8 @@ app.get('/api/piechartData', async (req, res) => {
   }
 });
 
-// Fetch bar chart data from MongoDB
+
+// Fetch data from MongoDB
 app.get('/api/barchartData', async (req, res) => {
   try {
     // Fetch data from MongoDB using the Event model
