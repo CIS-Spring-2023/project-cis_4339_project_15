@@ -6,33 +6,51 @@ const apiURL = import.meta.env.VITE_ROOT_API
 export default {
   data() {
     return {
-      // Take the services from the local storage to display
-      services: JSON.parse(localStorage.getItem('services')),
-      // Parameter for search to occur
+      services: [],
       searchBy: '',
       number: '',
       name: '',
-    }
+    };
   },
   methods: {
-    // TEMP, fill with api call in backend
-    handleSubmitForm() {
+    async handleSubmitForm() {
+      const baseUrl = 'http://localhost:3000'; // Replace with your server's base URL
 
+      if (this.searchBy === 'number') {
+        const response = await axios.get(
+          `${baseUrl}/services/by-number/${this.number}`
+        );
+        this.services = [response.data];
+      } else if (this.searchBy === 'name') {
+        const response = await axios.get(
+          `${baseUrl}/services/by-name/${this.name}`
+        );
+        this.services = [response.data];
+      } else {
+        const response = await axios.get(`${baseUrl}/services`);
+        this.services = response.data;
+      }
     },
-    // abstracted method to get events
-    getEvents() {
-
+    async getEvents() {
+      const baseUrl = 'http://localhost:3000'; // Replace with your server's base URL
+      const response = await axios.get(`${baseUrl}/services`);
+      this.services = response.data;
     },
     clearSearch() {
       // Resets all the variables
-      this.searchBy = ''
-      this.number = ''
-      this.name = ''
+      this.searchBy = '';
+      this.number = '';
+      this.name = '';
 
-      this.getEvents()
-    }
-  }
-}
+      this.getEvents();
+    },
+  },
+  created() {
+    // Fetch services when the component is created
+    this.getEvents();
+  },
+};
+
 </script>
 
 <template>
@@ -50,11 +68,11 @@ export default {
           <select
             class="rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             v-model="searchBy">
-            <option value="Service Number">Service Number</option>
-            <option value="Service Name">Service Name</option>
+            <option value="number">Service Number</option>
+            <option value="name">Service Name</option>
           </select>
         </div>
-        <div class="flex flex-col" v-if="searchBy === 'Service Number'">
+        <div class="flex flex-col" v-if="searchBy === 'number'">
           <label class="block">
             <input type="number"
               class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
@@ -62,7 +80,7 @@ export default {
           </label>
         </div>
         <!-- Displays event date search field -->
-        <div class="flex flex-col" v-if="searchBy === 'Service Name'">
+        <div class="flex flex-col" v-if="searchBy === 'name'">
           <input
             class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             type="text" v-model="name" v-on:keyup.enter="handleSubmitForm" placeholder="Enter Service Name" />
@@ -99,10 +117,10 @@ export default {
             </tr>
           </thead>
           <tbody v-for="(item, index) in services" :key="index" class="divide-y divide-gray-300">
-            <tr v-if="item.active">
-              <td class="p-2 text-left">{{ item.number }}</td>
-              <td class="p-2 text-left">{{ item.name }}</td>
-              <td class="p-2 text-left">{{ item.description }}</td>
+            <tr v-if="item.serviceStatus">
+              <td class="p-3 text-left">{{ item.serviceNumber }}</td>
+              <td class="p-3 text-left">{{ item.serviceName }}</td>
+              <td class="p-3 text-left">{{ item.serviceDescription }}</td>
             </tr>
           </tbody>
         </table>
