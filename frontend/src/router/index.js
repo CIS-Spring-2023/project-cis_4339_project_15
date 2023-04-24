@@ -12,13 +12,13 @@ const routes = [
     name: 'intakeform',
     props: true,
     component: () => import('../components/intakeForm.vue'),
-    meta: {needEdit: true}
+    meta: { needEdit: true }
   },
   {
     path: '/findclient',
     name: 'findclient',
     component: () => import('../components/findClient.vue'),
-    meta: {needView: true}
+    meta: { needView: true }
   },
   {
     path: '/updateclient/:id',
@@ -30,13 +30,13 @@ const routes = [
     path: '/eventform',
     name: 'eventform',
     component: () => import('../components/eventForm.vue'),
-    meta: {needEdit: true}
+    meta: { needEdit: true }
   },
   {
     path: '/findevents',
     name: 'findevents',
     component: () => import('../components/findEvents.vue'),
-    meta: {needView: true}
+    meta: { needView: true }
 
   },
   {
@@ -52,18 +52,24 @@ const routes = [
     component: () => import('../components/loginPage.vue')
   },
   {
+    path: '/logout',
+    name: 'logout',
+    props: true,
+    component: () => import('../components/logout.vue')
+  },
+  {
     path: '/servicepage',
     name: 'servicepage',
     props: true,
     component: () => import('../components/servicePage.vue'),
-    meta: {needEdit: true}
+    meta: { needEdit: true }
   },
   {
     path: '/findservices',
     name: 'findservices',
     props: true,
     component: () => import('../components/findServices.vue'),
-    meta: {needView: true}
+    meta: { needView: true }
   }
 ]
 const router = createRouter({
@@ -88,7 +94,7 @@ router.beforeEach((to, from, next) => {
       // Cannot access route without login, redirect to login page
       next('/loginPage')
     }
-  } 
+  }
   else if (to.matched.some(record => record.meta.needEdit)) {
     // Only editors may see forms, so only ea is checked; same logic as above
     if (ea) {
@@ -96,7 +102,7 @@ router.beforeEach((to, from, next) => {
     } else {
       next('/loginPage')
     }
-  } 
+  }
   // No record.meta was found = no login needed so proceed (this only applies to dashboard, login, and unused pages)
   else {
     next()

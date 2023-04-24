@@ -146,6 +146,12 @@ export default {
                 User Login
               </router-link>
             </li>
+            <li>
+              <router-link to="/logout">
+                <span style="position: relative; top: 6px" class="material-icons">key</span>
+                Log out
+              </router-link>
+            </li>
           </ul>
         </nav>
       </header>
