@@ -42,30 +42,66 @@ app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`)
 })
 
-// Define a schema for your data
+// Define a schema for your pie chart data
+const clientSchema = new mongoose.Schema({
+  address: String,
+  zip: String
+});
+
+// Define a schema for events collection
 const eventSchema = new mongoose.Schema({
   eventName: String,
   eventDate: String,
   numberOfAttendees: Number
 });
 
-// Create a model based on the schema
+// const eventSchema = new mongoose.Schema({
+//   eventName: String,
+//   eventDate: String,
+//   numberOfAttendees: Number
+// });
+
+// Create a model for clients collection
+const Client = mongoose.model('Client', clientSchema);
+
+// Create a model for events collection
 const Event = mongoose.model('Event', eventSchema);
 
-// Fetch data from MongoDB
-app.get('/api/chartData', async (req, res) => {
+// Fetch pie chart data from MongoDB
+app.get('/api/piechartData', async (req, res) => {
+  try {
+    // Fetch data from MongoDB using the Client model
+    const clients = await Client.find();
+
+    // Process the data and format it as needed for piechart
+    const piechartData = clients.map(client => ({
+      label: client.address,
+      value: client.zip
+    }));
+
+    // Send the data as response
+    res.json(piechartData);
+  } catch (err) {
+    console.error('Failed to fetch pie chart data:', err);
+    res.status(500).json({ error: 'Failed to fetch pie chart data' });
+  }
+});
+
+// Fetch bar chart data from MongoDB
+app.get('/api/barchartData', async (req, res) => {
   try {
     // Fetch data from MongoDB using the Event model
     const events = await Event.find();
 
-    // Process the data and format it as needed for your chart
-    const chartData = events.map(event => ({
+    // Process the data and format it as needed for barchart
+    const barchartData = events.map(event => ({
       label: event.eventName,
+      date: event.eventDate,
       value: event.numberOfAttendees
     }));
 
     // Send the data as response
-    res.json(chartData);
+    res.json(barchartData);
   } catch (err) {
     console.error('Failed to fetch chart data:', err);
     res.status(500).json({ error: 'Failed to fetch chart data' });
