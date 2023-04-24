@@ -29,11 +29,17 @@ router.get('/login', (req, res) => {
         user.findOne({ username: req.body.username }, (err, role) => {
             if (!err) {
                 try {
+                    const username = role.username
                     // mongoose-bcrypt method, set cookies for matching login information
                     role.verifyPassword(req.body.password)
                         .then(function (valid) {
                             if (valid) {
-                                res.cookie('isAuthorized', true)
+                                if (username === 'viewer') {
+                                    res.cookie('isViewAuthorized', true)
+                                }
+                                if (username === 'editor') {
+                                    res.cookie('isEditAuthorized', true)
+                                }
                                 res.redirect(301, '/')
                             } else {
                                 res.status(401).send('Incorrect password')
@@ -58,7 +64,8 @@ router.get('/login', (req, res) => {
 
 // logout an user, clear the login cookies
 router.get('/logout', (req, res) => {
-    res.clearCookie('isAuthorized')
+    res.clearCookie('isViewAuthorized')
+    res.clearCookie('isEditAuthorized')
     res.redirect('/login')
 })
 
