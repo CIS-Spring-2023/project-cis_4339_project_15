@@ -23,24 +23,24 @@ router.get('/', (req, res, next) => {
 */
 
 // verify a login, authorize an user using cookies
-router.get('/login', (req, res) => {
+router.post('/login', (req, res) => {
     try {
         // find the role with the stated username
         user.findOne({ username: req.body.username }, (err, role) => {
+            console.log(req.body)
             if (!err) {
                 try {
                     const username = role.username
-                    // mongoose-bcrypt method, set cookies for matching login information
+                    // mongoose-bcrypt method
                     role.verifyPassword(req.body.password)
                         .then(function (valid) {
                             if (valid) {
                                 if (username === 'viewer') {
-                                    res.cookie('isViewAuthorized', true)
+                                    res.json({ isAuthorized: 'view' })
                                 }
                                 if (username === 'editor') {
-                                    res.cookie('isEditAuthorized', true)
+                                    res.json({ isAuthorized: 'edit' })
                                 }
-                                res.redirect(301, '/')
                             } else {
                                 res.status(401).send('Incorrect password')
                             }
@@ -60,13 +60,6 @@ router.get('/login', (req, res) => {
         console.error(err)
         res.status(500).json({ error: 'Server Error' })
     }
-})
-
-// logout an user, clear the login cookies
-router.get('/logout', (req, res) => {
-    res.clearCookie('isViewAuthorized')
-    res.clearCookie('isEditAuthorized')
-    res.redirect('/login')
 })
 
 module.exports = router

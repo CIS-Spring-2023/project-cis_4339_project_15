@@ -140,16 +140,16 @@ export default {
                 Find Services
               </router-link>
             </li>
-            <li>
+            <li v-if="!edit && !view">
               <router-link to="/loginpage">
                 <span style="position: relative; top: 6px" class="material-icons">key</span>
                 User Login
               </router-link>
             </li>
-            <li>
-              <router-link to="/logout">
+            <li v-if="edit || view">
+              <router-link to="/loginpage">
                 <span style="position: relative; top: 6px" class="material-icons">key</span>
-                Log out
+                Logout
               </router-link>
             </li>
           </ul>
