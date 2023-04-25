@@ -95,7 +95,7 @@ app.get('/api/piechartData', async (req, res) => {
       }
     });
 
-    // Process the data and format for pie chart
+    // Process the data and format for the pie chart
     const piechartData = Object.keys(clientsByZip).map(zip => ({
       label: zip,
       value: clientsByZip[zip]
@@ -116,7 +116,7 @@ app.get('/api/barchartData', async (req, res) => {
     // Fetch data from MongoDB using the Event model
     const events = await Event.find();
 
-    // Process the data and format for barchart
+    // Process the data and format for the barchart
     const barchartData = events.map(event => ({
       label: event.name,
       date: event.date,

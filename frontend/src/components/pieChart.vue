@@ -7,8 +7,7 @@ Chart.register(...registerables);
 export default {
   async mounted() {
     try {
-      // Make API call to fetch data from MongoDB using Axios
-      const response = await axios.get('http://127.0.0.1:3000/api/piechartData');
+      const response = await axios.get('http://127.0.0.1:3000/api/piechartData'); // Make API call to fetch data from MongoDB using Axios
       const data = response.data;
 
       // Extract labels and data from the API 
