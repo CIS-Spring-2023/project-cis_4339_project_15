@@ -11,11 +11,11 @@ export default {
       const response = await axios.get('http://127.0.0.1:3000/api/piechartData');
       const data = response.data;
 
-      // Extract labels and data from the API response
+      // Extract labels and data from the API 
       const labels = data.map(item => item.label);
       const chartData = data.map(item => item.value);
 
-      // Create chart
+      // Create pie chart
       await new Chart(this.$refs.myChart, {
         type: 'pie',
         data: {
@@ -37,7 +37,7 @@ export default {
       });
     } catch (err) {
       console.error('Failed to fetch pie chart data:', err);
-      // Handle error as needed
+      // Handle error
     }
   },
 };

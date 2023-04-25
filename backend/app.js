@@ -42,7 +42,7 @@ app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`)
 })
 
-// Define a schema for your pie chart data
+// Define a schema for pie chart data
 const clientSchema = new mongoose.Schema({
   address: {
     line1: String,
@@ -55,7 +55,7 @@ const clientSchema = new mongoose.Schema({
   collection: 'client'
 });
 
-// Define a schema for events collection
+// Define a schema for event collection
 const eventSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -72,16 +72,11 @@ const eventSchema = new mongoose.Schema({
   collection: 'event'
 });
 
-// const eventSchema = new mongoose.Schema({
-//   eventName: String,
-//   eventDate: String,
-//   numberOfAttendees: Number
-// });
 
-// Create a model for clients collection
+// Create a model for client collection
 const Client = mongoose.model('Client', clientSchema);
 
-// Create a model for events collection
+// Create a model for event collection
 const Event = mongoose.model('Event', eventSchema);
 
 // Fetch pie chart data from MongoDB
@@ -100,7 +95,7 @@ app.get('/api/piechartData', async (req, res) => {
       }
     });
 
-    // Process the data and format it as needed for pie chart
+    // Process the data and format for pie chart
     const piechartData = Object.keys(clientsByZip).map(zip => ({
       label: zip,
       value: clientsByZip[zip]
@@ -121,7 +116,7 @@ app.get('/api/barchartData', async (req, res) => {
     // Fetch data from MongoDB using the Event model
     const events = await Event.find();
 
-    // Process the data and format it as needed for barchart
+    // Process the data and format for barchart
     const barchartData = events.map(event => ({
       label: event.name,
       date: event.date,

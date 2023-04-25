@@ -24,14 +24,15 @@ export default {
   methods: {
     async fetchbarChartData() {
       try {
-        const response = await axios.get('http://127.0.0.1:3000/api/barchartData')
+        const response = await axios.get('http://127.0.0.1:3000/api/barchartData') //Make API call to fetch data from MongoDB using Axios
         const chartData = response.data
+        // Fetch event name, event date, and number of attendees when user move cursor to the bar chart
         this.label = chartData.map(event => `${event.label}\n${event.date}`)
         this.chartData = chartData.map(event => event.value)
         console.log(response.data);
       } catch (error) {
         console.error('Failed to fetch chart data:', error)
-        // Handle error as needed
+        // Handle error
       }
     },
     renderbarChart() {
