@@ -55,9 +55,17 @@ const clientSchema = new mongoose.Schema({
 
 // Define a schema for events collection
 const eventSchema = new mongoose.Schema({
-  eventName: String,
-  eventDate: String,
-  numberOfAttendees: Number
+  name: {
+    type: String,
+    required: true
+  },
+  date: {
+    type: Date,
+    required: true
+  },
+  attendees: {
+    type: [String]
+  }
 });
 
 // const eventSchema = new mongoose.Schema({
@@ -111,9 +119,9 @@ app.get('/api/barchartData', async (req, res) => {
 
     // Process the data and format it as needed for barchart
     const barchartData = events.map(event => ({
-      label: event.eventName,
-      date: event.eventDate,
-      value: event.numberOfAttendees
+      label: event.name,
+      date: event.date,
+      value: event.attendees.length
     }));
 
     // Send the data as response
