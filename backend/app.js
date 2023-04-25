@@ -51,6 +51,8 @@ const clientSchema = new mongoose.Schema({
     county: String,
     zip: String
   }
+}, {
+  collection: 'client'
 });
 
 // Define a schema for events collection
@@ -66,6 +68,8 @@ const eventSchema = new mongoose.Schema({
   attendees: {
     type: [String]
   }
+}, {
+  collection: 'event'
 });
 
 // const eventSchema = new mongoose.Schema({
