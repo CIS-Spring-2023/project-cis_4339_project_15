@@ -26,7 +26,7 @@ export default {
       try {
         const response = await axios.get('http://127.0.0.1:3000/api/barchartData')
         const chartData = response.data
-        this.label = chartData.map(event => event.label)
+        this.label = chartData.map(event => `${event.label}\n${event.date}`)
         this.chartData = chartData.map(event => event.value)
         console.log(response.data);
       } catch (error) {
