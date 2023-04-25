@@ -44,8 +44,13 @@ app.listen(PORT, () => {
 
 // Define a schema for your pie chart data
 const clientSchema = new mongoose.Schema({
-  address: String,
-  zip: String
+  address: {
+    line1: String,
+    line2: String,
+    city: String,
+    county: String,
+    zip: String
+  }
 });
 
 // Define a schema for events collection
@@ -73,10 +78,20 @@ app.get('/api/piechartData', async (req, res) => {
     // Fetch data from MongoDB using the Client model
     const clients = await Client.find();
 
-    // Process the data and format it as needed for piechart
-    const piechartData = clients.map(client => ({
-      label: client.address,
-      value: client.zip
+    // Calculate the number of clients by zip code
+    const clientsByZip = {};
+    clients.forEach(client => {
+      if (client.address.zip in clientsByZip) {
+        clientsByZip[client.address.zip] += 1;
+      } else {
+        clientsByZip[client.address.zip] = 1;
+      }
+    });
+
+    // Process the data and format it as needed for pie chart
+    const piechartData = Object.keys(clientsByZip).map(zip => ({
+      label: zip,
+      value: clientsByZip[zip]
     }));
 
     // Send the data as response
