@@ -68,7 +68,10 @@ export default {
     },
     // method to allow click through table to event details
     editEvent(eventID) {
-      this.$router.push({ name: 'eventdetails', params: { id: eventID } })
+      const ea = sessionStorage.getItem('edit')
+      if (ea) {
+        this.$router.push({ name: 'eventdetails', params: { id: eventID } })
+      }
     }
   }
 }
@@ -77,20 +80,16 @@ export default {
 <template>
   <main>
     <div>
-      <h1
-        class="font-bold text-4xl text-red-700 tracking-widest text-center mt-10"
-      >
+      <h1 class="font-bold text-4xl text-red-700 tracking-widest text-center mt-10">
         Welcome
       </h1>
       <br />
       <!-- Created Div for styling for chart, needs to be sized properly and centered, called chart here too ! -->
       <div class="box" style="position: relative; height:50%; width:40% ">
         <h1 class="font-bold text-center text-red-700">Clients by Zipcode</h1>
-      <Zipchart></Zipchart>
-    </div>
-      <div
-        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10"
-      >
+        <Zipchart></Zipchart>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
         <div class="ml-10"></div>
         <div class="flex flex-col col-span-2">
           <table class="min-w-full shadow-md rounded">
@@ -102,11 +101,7 @@ export default {
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-300">
-              <tr
-                @click="editEvent(event._id)"
-                v-for="event in recentEvents"
-                :key="event._id"
-              >
+              <tr @click="editEvent(event._id)" v-for="event in recentEvents" :key="event._id">
                 <td class="p-2 text-left">{{ event.name }}</td>
                 <td class="p-2 text-left">{{ formattedDate(event.date) }}</td>
                 <td class="p-2 text-left">{{ event.attendees.length }}</td>
@@ -114,17 +109,11 @@ export default {
             </tbody>
           </table>
           <div>
-            <AttendanceChart
-              v-if="!loading && !error"
-              :label="labels"
-              :chart-data="chartData"
-            ></AttendanceChart>
+            <AttendanceChart v-if="!loading && !error" :label="labels" :chart-data="chartData"></AttendanceChart>
 
             <!-- Start of loading animation -->
             <div class="mt-40" v-if="loading">
-              <p
-                class="text-6xl font-bold text-center text-gray-500 animate-pulse"
-              >
+              <p class="text-6xl font-bold text-center text-gray-500 animate-pulse">
                 Loading...
               </p>
             </div>

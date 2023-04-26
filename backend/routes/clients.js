@@ -6,6 +6,36 @@ const org = process.env.ORG
 // importing data model schemas
 const { clients } = require('../models/models')
 
+// Fetch pie chart data from MongoDB (MOVED FROM APP.JS BY ANDY)
+router.get('/piechartData', async (req, res) => {
+  try {
+    // Fetch data from MongoDB using the Client model
+    const clientsData = await clients.find();
+
+    // Calculate the number of clients by zip code
+    const clientsByZip = {};
+    clientsData.forEach(client => {
+      if (client.address.zip in clientsByZip) {
+        clientsByZip[client.address.zip] += 1;
+      } else {
+        clientsByZip[client.address.zip] = 1;
+      }
+    });
+
+    // Process the data and format for the pie chart
+    const piechartData = Object.keys(clientsByZip).map(zip => ({
+      label: zip,
+      value: clientsByZip[zip]
+    }));
+
+    // Send the data as response
+    res.json(piechartData);
+  } catch (err) {
+    console.error('Failed to fetch pie chart data:', err);
+    res.status(500).json({ error: 'Failed to fetch pie chart data' });
+  }
+});
+
 // GET 10 most recent clients for org
 router.get('/', (req, res, next) => {
   clients

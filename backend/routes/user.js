@@ -30,12 +30,14 @@ router.post('/login', (req, res) => {
             console.log(req.body)
             if (!err) {
                 try {
+                    // Differentiate roles to give the correct response
                     const username = role.username
                     // mongoose-bcrypt method
                     role.verifyPassword(req.body.password)
                         .then(function (valid) {
                             if (valid) {
                                 if (username === 'viewer') {
+                                    // give a response so FE can set cookies/storage
                                     res.json({ isAuthorized: 'view' })
                                 }
                                 if (username === 'editor') {

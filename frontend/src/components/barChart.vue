@@ -7,6 +7,7 @@
 <script>
 import { Chart, registerables } from 'chart.js'
 import axios from 'axios'
+const apiURL = import.meta.env.VITE_ROOT_API
 
 Chart.register(...registerables)
 
@@ -24,12 +25,11 @@ export default {
   methods: {
     async fetchbarChartData() {
       try {
-        const response = await axios.get('http://127.0.0.1:3000/api/barchartData') //Make API call to fetch data from MongoDB using Axios
+        const response = await axios.get(`${apiURL}/events/barchartData`) //Make API call to fetch data from MongoDB using Axios
         const chartData = response.data
         // Fetch event name, event date, and number of attendees when user move cursor to bar chart
         this.label = chartData.map(event => `${event.label}\n${event.date}`)
         this.chartData = chartData.map(event => event.value)
-        console.log(response.data);
       } catch (error) {
         console.error('Failed to fetch chart data:', error)
         // Handle error

@@ -6,6 +6,27 @@ const org = process.env.ORG
 // importing data model schemas
 const { events } = require('../models/models')
 
+// Fetch data from MongoDB (MOVED FROM APP.JS BY ANDY)
+router.get('/barchartData', async (req, res) => {
+  try {
+    // Fetch data from MongoDB using the Event model
+    const eventsData = await events.find();
+
+    // Process the data and format for the barchart
+    const barchartData = eventsData.map(event => ({
+      label: event.name,
+      date: event.date,
+      value: event.attendees.length
+    }));
+
+    // Send the data as response
+    res.json(barchartData);
+  } catch (err) {
+    console.error('Failed to fetch chart data:', err);
+    res.status(500).json({ error: 'Failed to fetch chart data' });
+  }
+});
+
 // GET 10 most recent events for org
 router.get('/', (req, res, next) => {
   events
