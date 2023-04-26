@@ -1,7 +1,7 @@
 # LOGIN INFORMATION
 
 Username = "viewer" OR "editor"
-Password = "password"
+Password = "password123"
 
 ## Data Platform Frontend
 
