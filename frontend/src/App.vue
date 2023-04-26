@@ -119,7 +119,7 @@ export default {
             <li v-if="edit">
               <router-link to="/servicepage">
                 <span style="position: relative; top: 6px" class="material-icons">event</span>
-                Edit Services
+                Create Service
               </router-link>
             </li>
             <li v-if="edit || view">
