@@ -14,7 +14,7 @@ export default {
   },
   methods: {
     async handleSubmitForm() {
-      const baseUrl = 'http://localhost:3000'; // Replace with your server's base URL
+      const baseUrl = 'http://localhost:3000'; 
 
       if (this.searchBy === 'number') {
         const response = await axios.get(
@@ -32,7 +32,7 @@ export default {
       }
     },
     async getEvents() {
-      const baseUrl = 'http://localhost:3000'; // Replace with your server's base URL
+      const baseUrl = 'http://localhost:3000'; 
       const response = await axios.get(`${baseUrl}/services`);
       this.services = response.data;
     },

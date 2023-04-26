@@ -51,35 +51,35 @@ router.get('/by-number/:number', async (req, res) => {
   });
   
 
-
-
-//GET read endpoint to use a query papermeter studentID or for all student entries
-// router.get('/', (req, res, next) => {
-//     //checking whether a query parameter is used in the request
-//     if (req.query.serviceNumber) {
-//         ServiceModel.findOne({ serviceNumber: req.query.serviceNumber }, (error, data) => {
-//             if (error) {
-//                 return next(error)
-//             } else if (data === null) {
-//                 // Sending 404 when not found something is a good practice
-//                 res.status(404).send('Service not found');
-//             }
-//             else {
-//                 res.json(data)
-//             }
-//         });
-//     } else {
-//         //very plain way to get all the data from the collection through the mongoose schema
-//         ServiceModel.find((error, data) => {
-//             if (error) {
-//                 //here we are using a call to next() to send an error message back
-//                 return next(error)
-//             } else {
-//                 res.json(data)
-//             }
-//         })
-//     }
-// });
+// POST route to create a new service
+router.post('/', async (req, res) => {
+    try {
+      const newService = new ServiceModel(req.body);
+      await newService.save();
+      res.status(201).json({ message: 'Service created successfully', data: newService });
+    } catch (error) {
+      res.status(400).json({ message: 'Error creating service', error });
+    }
+  });
+  
+  // PUT route to edit an existing service by ID
+  router.put('/:id', async (req, res) => {
+    try {
+      const updatedService = await ServiceModel.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        { new: true }
+      );
+  
+      if (!updatedService) {
+        return res.status(404).json({ message: 'Service not found' });
+      }
+  
+      res.status(200).json({ message: 'Service updated successfully', data: updatedService });
+    } catch (error) {
+      res.status(400).json({ message: 'Error updating service', error });
+    }
+  });
 
 // //POST create endpoint for a student document
 // router.post('/', (req, res, next) => {

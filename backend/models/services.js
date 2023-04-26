@@ -11,7 +11,8 @@ let servicesSchema = new Schema({
       type: String
     },
     serviceStatus: {
-        type: Boolean
+        type: Boolean,
+        default:true 
       },
     serviceDescription: {
       type: String
