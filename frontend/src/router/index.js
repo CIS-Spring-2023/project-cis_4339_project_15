@@ -52,12 +52,6 @@ const routes = [
     component: () => import('../components/loginPage.vue')
   },
   {
-    path: '/logout',
-    name: 'logout',
-    props: true,
-    component: () => import('../components/logout.vue')
-  },
-  {
     path: '/servicepage',
     name: 'servicepage',
     props: true,

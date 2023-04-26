@@ -1,37 +1,49 @@
 <script>
 const apiURL = import.meta.env.VITE_ROOT_API
+import axios from 'axios'
 
 export default {
   data() {
     return {
+      va: sessionStorage.getItem('view'),
+      ea: sessionStorage.getItem('edit'),
       // Variables from the login form
       username: '',
       password: '',
       fail: false,
-      success: false
     }
   },
 
-  // This is the front-end only method functionality, later we will make an api call instead
-  // This is not a secure method, it uses the method in app.vue to change the states
-  // USERNAME: 'viewer' / 'editor' PASSWORD: 'password'
   methods: {
     login() {
-      if (this.username === 'viewer' && this.password === 'password') {
-        // Updates variables for the alert in the html
-        this.success = true;
-        // Updates the state using the mentioned method
-        this.$root.updateView(true);
-        this.$root.updateEdit(false);
-      }
-      else if (this.username === 'editor' && this.password === 'password') {
-        this.success = true;
-        this.$root.updateView(true);
-        this.$root.updateEdit(true);
-      } else {
-        this.fail = true;
-      }
+      axios.post(`${apiURL}/user/login`, {
+        username: this.username,
+        password: this.password
+      })
+        .then(res => {
+          // successful login, set sessionStorage
+          console.log(res.data);
+          if (res.data.isAuthorized === 'view') {
+            this.$root.updateView(true)
+            this.$router.push('/')
+          }
+          if (res.data.isAuthorized === 'edit') {
+            this.$root.updateEdit(true)
+            this.$router.push('/')
+          }
+
+        })
+        .catch(err => {
+          // login failed, handle error 
+          console.log(err)
+          this.fail = true
+        })
     },
+    logout() {
+      sessionStorage.clear()
+      location.reload();
+
+    }
 
   }
 }
@@ -40,18 +52,22 @@ export default {
 <template>
   <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
     <div class="py-8 px-4 shadow sm:rounded-lg sm:px-10">
-      <form @submit.prevent="login">
+
+      <!-- Display logout button if user is logged in -->
+      <button v-if="va || ea" class="w-full flex justify-center bg-red-700 text-white rounded"
+        @click="logout">Logout</button>
+
+      <form v-else @submit.prevent="login">
         <label class="block text-sm font-medium text-gray-700">Username
-          <input type="text" v-model="username" />
+          <input required type="text" v-model="username" />
         </label><br>
         <label class="block text-sm font-medium text-gray-700 ml-1">Password
-          <input type="password" v-model="password" />
+          <input required type="password" v-model="password" />
         </label><br>
         <button class="w-full flex justify-center bg-red-700 text-white rounded" type="submit">Login</button>
       </form>
       <br>
-      <div v-if="fail" class="text-red-700 w-full flex justify-center">Incorrect Username or Password</div>
-      <div v-if="success" class="text-green-700 w-full flex justify-center">Success</div>
+      <div v-if="fail" class="text-red-700 w-full flex justify-center">Failed Login!</div>
     </div>
   </div>
 </template>
