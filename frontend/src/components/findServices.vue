@@ -14,26 +14,25 @@ export default {
   },
   methods: {
     async handleSubmitForm() {
-      const baseUrl = 'http://localhost:3000'; 
-
+      
       if (this.searchBy === 'number') {
         const response = await axios.get(
-          `${baseUrl}/services/by-number/${this.number}`
+          `${apiURL}/services/by-number/${this.number}`
         );
         this.services = [response.data];
       } else if (this.searchBy === 'name') {
         const response = await axios.get(
-          `${baseUrl}/services/by-name/${this.name}`
+          `${apiURL}/services/by-name/${this.name}`
         );
         this.services = [response.data];
       } else {
-        const response = await axios.get(`${baseUrl}/services`);
+        const response = await axios.get(`${apiURL}/services`);
         this.services = response.data;
       }
     },
     async getEvents() {
-      const baseUrl = 'http://localhost:3000'; 
-      const response = await axios.get(`${baseUrl}/services`);
+      
+      const response = await axios.get(`${apiURL}/services`);
       this.services = response.data;
     },
     clearSearch() {

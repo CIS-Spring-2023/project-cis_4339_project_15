@@ -81,59 +81,5 @@ router.post('/', async (req, res) => {
     }
   });
 
-// //POST create endpoint for a student document
-// router.post('/', (req, res, next) => {
-//     ServiceModel.create(req.body, (error, data) => {
-//         if (error) {
-//             return next(error)
-//         } else {
-//             res.send('Student is added to the database');
-//         }
-//     });
-// });
-
-// //GET endpoint for retrieving student by _id
-// router.get('/:id', (req, res, next) => {
-//     ServiceModel.findOne({ _id: req.params.id }, (error, data) => {
-//         if (error) {
-//             return next(error)
-//         } else if (data === null) {
-//             // Sending 404 when not found something is a good practice
-//             res.status(404).send('Student not found');
-//         }
-//         else {
-//             res.json(data)
-//         }
-//     });
-// });
-
-// //PUT Updating - editing a student
-// router.put('/:id', (req, res, next) => {
-//     ServiceModel.findOneAndUpdate({ _id: req.params.id }, {
-//         $set: req.body
-//     }, (error, data) => {
-//         if (error) {
-//             return next(error);
-//         } else {
-//             res.send('Student is edited via PUT');
-//             console.log('Student successfully updated!', data)
-//         }
-//     })
-// });
-
-// //DELETE student by _id
-// router.delete('/:id', (req, res, next) => {
-//     //mongoose will use _id of document
-//     ServiceModel.findOneAndRemove({ _id: req.params.id }, (error, data) => {
-//         if (error) {
-//             return next(error);
-//         } else {
-//             res.status(200).json({
-//                 msg: data
-//             });
-//             //  res.send('Student is deleted');
-//         }
-//     });
-// });
 
 module.exports = router;
