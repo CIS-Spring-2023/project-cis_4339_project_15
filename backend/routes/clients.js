@@ -24,7 +24,7 @@ router.get('/piechartData', async (req, res) => {
 
     // Process the data and format for the pie chart
     const piechartData = Object.keys(clientsByZip).map(zip => ({
-      label: zip,
+      zip: zip,
       value: clientsByZip[zip]
     }));
 
