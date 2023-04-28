@@ -12,7 +12,7 @@ export default {
       const data = response.data;
 
       // Extract labels and data from the API 
-      const labels = data.map(item => item.label);
+      const labels = data.map(item => item.zip);
       const chartData = data.map(item => item.value);
 
       // Create pie chart
