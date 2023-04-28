@@ -30,7 +30,7 @@ export default {
         this.services = response.data;
       }
     },
-    async getEvents() {
+    async getServices() {
       
       const response = await axios.get(`${apiURL}/services`);
       this.services = response.data;
@@ -41,12 +41,12 @@ export default {
       this.number = '';
       this.name = '';
 
-      this.getEvents();
+      this.getServices();
     },
   },
   created() {
     // Fetch services when the component is created
-    this.getEvents();
+    this.getServices();
   },
 };
 

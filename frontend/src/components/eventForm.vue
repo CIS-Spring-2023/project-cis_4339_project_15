@@ -23,7 +23,8 @@ export default {
           zip: ''
         },
         description: ''
-      }
+      }, 
+      services: []
     }
   },
   methods: {
@@ -42,6 +43,10 @@ export default {
             console.log(error)
           })
       }
+    }, 
+    async getServices() {
+      const response = await axios.get(`${apiURL}/services`);
+      this.services = response.data;
     }
   },
   // sets validations for the various data properties
@@ -52,7 +57,11 @@ export default {
         date: { required }
       }
     }
-  }
+  },
+  created() {
+    // Fetch services when the component is created
+    this.getServices();
+  },
 }
 </script>
 <template>
@@ -135,60 +144,23 @@ export default {
           <div></div>
           <!-- form field -->
           <div class="flex flex-col grid-cols-3">
-            <label>Services Offered at Event</label>
-            <div>
-              <label for="familySupport" class="inline-flex items-center">
-                <input
-                  type="checkbox"
-                  id="familySupport"
-                  value="Family Support"
-                  v-model="event.services"
-                  class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
-                  notchecked
-                />
-                <span class="ml-2">Family Support</span>
-              </label>
-            </div>
-            <div>
-              <label for="adultEducation" class="inline-flex items-center">
-                <input
-                  type="checkbox"
-                  id="adultEducation"
-                  value="Adult Education"
-                  v-model="event.services"
-                  class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
-                  notchecked
-                />
-                <span class="ml-2">Adult Education</span>
-              </label>
-            </div>
-            <div>
-              <label for="youthServices" class="inline-flex items-center">
-                <input
-                  type="checkbox"
-                  id="youthServices"
-                  value="Youth Services Program"
-                  v-model="event.services"
-                  class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
-                  notchecked
-                />
-                <span class="ml-2">Youth Services Program</span>
-              </label>
-            </div>
-            <div>
-              <label for="childhoodEducation" class="inline-flex items-center">
-                <input
-                  type="checkbox"
-                  id="childhoodEducation"
-                  value="Early Childhood Education"
-                  v-model="event.services"
-                  class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
-                  notchecked
-                />
-                <span class="ml-2">Early Childhood Education</span>
-              </label>
-            </div>
+          <label>Services Offered at Event</label>
+        <div v-if="services" >
+          <div v-for="(service, index) in services" :key="index">
+            <label :for="service.id" class="inline-flex items-center">
+              <input
+                type="checkbox"
+                :id="service.id"
+                :value="service.serviceName"
+                v-model="event.services"
+                class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
+                notchecked
+              />
+              <span class="ml-2">{{ service.serviceName }}</span>
+            </label>
           </div>
+        </div>
+        </div>
         </div>
 
         <!-- grid container -->

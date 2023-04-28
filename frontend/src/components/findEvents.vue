@@ -123,6 +123,7 @@ export default {
               <th class="p-4 text-left">Event Name</th>
               <th class="p-4 text-left">Event Date</th>
               <th class="p-4 text-left">Event Address</th>
+              <th class="p-4 text-left">Services Offered</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-300">
@@ -130,6 +131,13 @@ export default {
               <td class="p-2 text-left">{{ event.name }}</td>
               <td class="p-2 text-left">{{ formattedDate(event.date) }}</td>
               <td class="p-2 text-left">{{ event.address.line1 }}</td>
+              <td class="p-2 text-left">
+              <template v-for="(service, index) in event.services" :key="index">
+                <div>{{ service }}</div>
+              </template>
+            </td>
+
+
             </tr>
           </tbody>
         </table>
