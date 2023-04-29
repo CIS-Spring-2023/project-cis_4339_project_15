@@ -5,23 +5,27 @@ import axios from 'axios'
 export default {
   data() {
     return {
+      // View authorized (va) and edit authorized (ea) are variables used in various components to check authorization
       va: sessionStorage.getItem('view'),
       ea: sessionStorage.getItem('edit'),
       // Variables from the login form
       username: '',
       password: '',
+      // For form validation
       fail: false,
     }
   },
 
   methods: {
+    // Submit form method
     login() {
+      // Call the api
       axios.post(`${apiURL}/user/login`, {
         username: this.username,
         password: this.password
       })
         .then(res => {
-          // successful login, set sessionStorage
+          // Successful login, set sessionStorage
           console.log(res.data);
           if (res.data.isAuthorized === 'view') {
             this.$root.updateView(true)
@@ -34,12 +38,13 @@ export default {
 
         })
         .catch(err => {
-          // login failed, handle error 
+          // Login failed, handle error 
           console.log(err)
           this.fail = true
         })
     },
     logout() {
+      // Clear session storage = remove authorization
       sessionStorage.clear()
       location.reload();
 
@@ -57,6 +62,7 @@ export default {
       <button v-if="va || ea" class="w-full flex justify-center bg-red-700 text-white rounded"
         @click="logout">Logout</button>
 
+      <!-- Display login form otherwise -->
       <form v-else @submit.prevent="login">
         <label class="block text-sm font-medium text-gray-700">Username
           <input required type="text" v-model="username" />
