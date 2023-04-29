@@ -146,8 +146,8 @@ export default {
           <div class="flex flex-col grid-cols-3">
           <label>Services Offered at Event</label>
         <div v-if="services" >
-          <div v-for="(service, index) in services" :key="index">
-            <label :for="service.id" class="inline-flex items-center">
+          <div v-for="(service, index) in services.filter(service => service.serviceStatus)" :key="index">
+            <label :for="service.id"  class="inline-flex items-center">
               <input
                 type="checkbox"
                 :id="service.id"
@@ -159,6 +159,7 @@ export default {
               <span class="ml-2">{{ service.serviceName }}</span>
             </label>
           </div>
+
         </div>
         </div>
         </div>

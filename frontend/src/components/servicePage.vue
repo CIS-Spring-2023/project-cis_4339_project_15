@@ -32,12 +32,13 @@ export default {
     async submitAddService() {
       const baseUrl = 'http://localhost:3000'; 
       try {
-        const response = await axios.post(`${baseUrl}/services/`, {
+        const response = await axios.post(`${baseUrl}/services`, {
           serviceNumber: this.serviceNumber,
           serviceName: this.serviceName,
           serviceDescription: this.serviceDescription,
         });
         console.log(response.data);
+        console.log()
         this.clearSearch()
         this.numberAdd = "";
         this.name = "";
@@ -115,9 +116,9 @@ export default {
           <label class="block">
             <span class="text-gray-700">Service Number</span>
             <span style="color: #ff0000">*</span>
-            <input type="text"
+            <input type="number"
               class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              v-model="EditserviceNumber" />
+              v-model="serviceNumber" />
           </label>
         </div>
 
@@ -128,7 +129,7 @@ export default {
             <span style="color: #ff0000">*</span>
             <input type="text"
               class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              placeholder v-model="EditserviceName" />
+              placeholder v-model="serviceName" />
           </label>
         </div>
         <!-- form field -->
@@ -137,7 +138,7 @@ export default {
             <span class="text-gray-700">Service Description</span>
             <input type="text"
               class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              placeholder v-model="EditserviceDescription" />
+              placeholder v-model="serviceDescription" />
           </label>
         </div>
 
@@ -174,7 +175,7 @@ export default {
         <div class="flex flex-col">
           <label class="block">
             <span class="text-gray-700">Service Number</span>
-            <input type="text"
+            <input type="number"
               class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
               v-model="EditserviceNumber" />
           </label>
